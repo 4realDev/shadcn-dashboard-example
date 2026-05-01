@@ -3,7 +3,41 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 
+/*
+DARK MODE shadcn EXPLAINED:
+
+### The Flow
+```
+User toggles dark mode
+        │
+        ▼
+JavaScript adds/removes "dark" class on <html>
+        │
+        ▼
+<html class="dark">
+  <body>
+    <div class="dark:bg-card">   ← now this activates
+
+inside index.css
+@custom-variant   dark   (&:is(.dark *));
+│                 │       │
+│                 │       └── 3. the CSS rule that must be true to render the variants-style
+│                 └────────── 2. the name you use in HTML
+└──────────────────────────── 1. "I am defining a new variant" - works as a condition here
+
+How it works:
+in component: apply this style (dark:styling)
+when the element itself (&), matches (:is), being anywhere inside a .dark class (.dark *)
+
+Tailwind converts "dark:bg-card" into: 
+&:is(.dark *) {
+  background-color: hsl(var(--card));
+}
+
+*/
+
 @custom-variant dark (&:is(.dark *));
+
 
 @theme inline {
     --font-heading: var(--font-sans);

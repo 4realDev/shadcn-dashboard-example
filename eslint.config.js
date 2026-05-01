@@ -18,6 +18,22 @@ export default defineConfig([
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/require-await': 'error',
+    },
+  },
+  // shadcn primitives export non-component values (e.g. badgeVariants) — must follow main config to override
+  {
+    files: ['src/components/ui/**'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
     },
   },
 ])
